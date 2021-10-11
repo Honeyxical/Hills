@@ -1,33 +1,66 @@
 #include <iostream>
+#define rSize 10
 
 using namespace std;
 
+double A = 0;
+double B = 0;
+double C = 0;
+
+void fillArray(int mass[rSize]);
+void coefficients(double x1, double y1, double x2, double y2);
+bool checkingNextPoint(double x, double y);
+
+
 
 int main() {
-    int n = 0;
-    int max = 0;
-    cout << "Enter array size: ";
-    cin >> n;
-    if(n <= 0){
-        cout << "Error array size!";
-        return 1;
-    }
-    int mass[n];
+    srand(time(NULL));
+    int step = 0;
+    int mass[rSize] = {0};
 
-    for(int i = 0; i < n; i++){
-        mass[i] = rand() % 100;
-        cout << mass[i] << " ";
-    }
+    cout << "Enter step: ";
+    cin >> step;
+    fillArray(mass);
     cout << endl;
-
-    max = mass[0];
-    for(int i = 0; i < n; i++){
-        if(mass[i]>max){
-            max = mass[i];
+    coefficients(0, mass[0], step, mass[step]);
+    for(int i = step; i <= rSize; i++){
+        if (!checkingNextPoint(step, mass[i]))
+        {
+            cout << "Didnt see:  " << mass[i] << endl;
         }
-        if(mass[i]<max) cout << mass[i] << " ";
+        else
+        {
+            coefficients(0, mass[0], step, mass[i]);
+        }
+        step += 2;
     }
-
     return 0;
 }
 
+void fillArray(int mass[rSize]){
+    for(int i = 0; i < rSize; i++){
+        mass[i] = rand() % 100;
+        cout << mass[i] << " ";
+    }
+}
+
+void coefficients(double x1, double y1, double x2, double y2)
+{
+    A = y1 - y2;
+    B = x2 - x1;
+    C = x1 * y2 - x2 * y1;
+}
+
+bool checkingNextPoint(double x, double y)
+{
+    double equation = A * x + B * y + C;
+
+    if (equation <= 0)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
