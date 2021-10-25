@@ -1,29 +1,19 @@
 #include <iostream>
-#define rSize 10
+#define rSize 12
 
 using namespace std;
-
 double A = 0;
 double B = 0;
 double C = 0;
-
-void fillArray(int mass[rSize]);
 void coefficients(double x1, double y1, double x2, double y2);
 bool checkingNextPoint(double x, double y);
 
-
-
 int main() {
-    srand(time(NULL));
-    int step = 0;
-    int mass[rSize] = {0};
+    int mass[rSize] = {1,2,2,6,7,8,9,13,13,18,19,20};
+    int step = 4;
 
-    cout << "Enter step: ";
-    cin >> step;
-    fillArray(mass);
-    cout << endl;
-    coefficients(0, mass[0], step, mass[step]);
-    for(int i = step; i <= rSize; i++){
+    coefficients(0, mass[0], 2, mass[1]);
+    for(int i = 2; i <= rSize; i++){
         if (!checkingNextPoint(step, mass[i]))
         {
             cout << "Didnt see:  " << mass[i] << endl;
@@ -35,13 +25,6 @@ int main() {
         step += 2;
     }
     return 0;
-}
-
-void fillArray(int mass[rSize]){
-    for(int i = 0; i < rSize; i++){
-        mass[i] = rand() % 100;
-        cout << mass[i] << " ";
-    }
 }
 
 void coefficients(double x1, double y1, double x2, double y2)
